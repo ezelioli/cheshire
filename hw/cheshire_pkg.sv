@@ -432,7 +432,7 @@ package cheshire_pkg;
     // Interconnect
     AddrWidth         : 48,
     AxiDataWidth      : 64,
-    AxiUserWidth      : 2,  // Convention: bit 0 for core(s), bit 1 for serial link
+    AxiUserWidth      : 2,  // Convention: bit 0 for core(s), bit 1 for serial link TODO: add more bits for llc
     AxiMstIdWidth     : 2,
     AxiMaxMstTrans    : 8,
     AxiMaxSlvTrans    : 8,
