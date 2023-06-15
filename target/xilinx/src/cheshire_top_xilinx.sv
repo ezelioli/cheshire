@@ -114,6 +114,8 @@ module cheshire_top_xilinx
     LlcSetAssoc       : 8,
     LlcNumLines       : 256,
     LlcNumBlocks      : 8,
+    LlcCachePartition : 1,
+    LlcMaxthread      : 256,
     LlcMaxReadTxns    : 8,
     LlcMaxWriteTxns   : 8,
     LlcAmoNumCuts     : 1,

@@ -24,8 +24,8 @@ packages:
     - common_verification
     - tech_cells_generic
   axi_llc:
-    revision: 559bcbd09a5a884dbe31e2d72fd95d024e357f39
-    version: 0.2.1
+    revision: ce8e00b3a0dce627add3703557ab77e7ad7e5cf5
+    version: null
     source:
       Git: https://github.com/pulp-platform/axi_llc
     dependencies:
@@ -75,7 +75,7 @@ packages:
       Git: https://github.com/pulp-platform/common_verification
     dependencies: []
   cva6:
-    revision: bf806ffa1385876ab70b28df488fafe7ea573a7f
+    revision: 8e9d589b5dd264cd98b479f58d0f92a2bf2a7a92
     version: null
     source:
       Git: https://github.com/pulp-platform/cva6

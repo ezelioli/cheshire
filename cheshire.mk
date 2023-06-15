@@ -97,12 +97,18 @@ $(CHS_SLINK_DIR)/.generated: $(CHS_ROOT)/hw/serial_link.hjson
 	$(MAKE) -C $(CHS_SLINK_DIR) update-regs
 	@touch $@
 
+# LLC partitioning configuration
+$(CHS_LLC_DIR)/.generated: 
+	$(MAKE) -C $(CHS_LLC_DIR) REGWIDTH=64 CACHENUMLINES=256 MAXTHREAD=256 CACHE_PARTITION=1 regs
+	@touch $@
+
 chs-hw-all: $(CHS_ROOT)/hw/regs/cheshire_reg_pkg.sv $(CHS_ROOT)/hw/regs/cheshire_reg_top.sv
 chs-hw-all: $(CHS_ROOT)/hw/regs/axi_rt_reg_pkg.sv $(CHS_ROOT)/hw/regs/axi_rt_reg_top.sv
 chs-hw-all: $(CHS_CLINT_DIR)/.generated
 chs-hw-all: $(CHS_OTP_DIR)/.generated
 chs-hw-all: $(CHS_VGA_DIR)/.generated
 chs-hw-all: $(CHS_SLINK_DIR)/.generated
+chs-hw-all: $(CHS_LLC_DIR)/.generated
 
 #####################
 # Generate Boot ROM #

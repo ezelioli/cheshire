@@ -129,6 +129,8 @@ package cheshire_pkg;
     shrt_bt LlcSetAssoc;
     shrt_bt LlcNumLines;
     shrt_bt LlcNumBlocks;
+    bit     LlcCachePartition;
+    shrt_bt LlcMaxthread;
     dw_bt   LlcMaxReadTxns;
     dw_bt   LlcMaxWriteTxns;
     aw_bt   LlcAmoNumCuts;
@@ -463,6 +465,8 @@ package cheshire_pkg;
     LlcSetAssoc       : 8,
     LlcNumLines       : 256,
     LlcNumBlocks      : 8,
+    LlcCachePartition : 1,
+    LlcMaxthread      : 256,
     LlcMaxReadTxns    : 8,
     LlcMaxWriteTxns   : 8,
     LlcAmoNumCuts     : 1,

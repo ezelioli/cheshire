@@ -487,6 +487,8 @@ module cheshire_soc import cheshire_pkg::*; #(
       .SetAssociativity ( Cfg.LlcSetAssoc  ),
       .NumLines         ( Cfg.LlcNumLines  ),
       .NumBlocks        ( Cfg.LlcNumBlocks ),
+      .CachePartition   ( Cfg.LlcCachePartition   ),
+      .MaxThread        ( Cfg.LlcMaxthread ),
       .AxiIdWidth       ( AxiSlvIdWidth    ),
       .AxiAddrWidth     ( Cfg.AddrWidth    ),
       .AxiDataWidth     ( Cfg.AxiDataWidth ),
