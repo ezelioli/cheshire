@@ -138,6 +138,7 @@ package cheshire_pkg;
     bit     LlcOutConnect;
     doub_bt LlcOutRegionStart;
     doub_bt LlcOutRegionEnd;
+    dw_bt   LlcUserAmoBit;
     // Parameters for VGA
     byte_bt VgaRedWidth;
     byte_bt VgaGreenWidth;
@@ -432,7 +433,7 @@ package cheshire_pkg;
     // Interconnect
     AddrWidth         : 48,
     AxiDataWidth      : 64,
-    AxiUserWidth      : 2,  // Convention: bit 0 for core(s), bit 1 for serial link TODO: add more bits for llc
+    AxiUserWidth      : 10,  // Convention: bit 0 for core(s), bit 1 for serial link TODO: add more bits for llc
     AxiMstIdWidth     : 2,
     AxiMaxMstTrans    : 8,
     AxiMaxSlvTrans    : 8,
@@ -474,6 +475,7 @@ package cheshire_pkg;
     LlcOutConnect     : 1,
     LlcOutRegionStart : 'h8000_0000,
     LlcOutRegionEnd   : 'h1_0000_0000,
+    LlcUserAmoBit     : 2,
     // VGA: RGB332
     VgaRedWidth       : 3,
     VgaGreenWidth     : 3,

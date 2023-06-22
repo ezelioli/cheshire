@@ -81,7 +81,7 @@ module cheshire_top_xilinx
     // Interconnect
     AddrWidth         : 48,
     AxiDataWidth      : 64,
-    AxiUserWidth      : 2,  // Convention: bit 0 for core(s), bit 1 for serial link
+    AxiUserWidth      : 10,  // Convention: bit 0 for core(s), bit 1 for serial link
     AxiMstIdWidth     : 2,
     AxiMaxMstTrans    : 8,
     AxiMaxSlvTrans    : 8,
@@ -123,6 +123,7 @@ module cheshire_top_xilinx
     LlcOutConnect     : 1,
     LlcOutRegionStart : 'h8000_0000,
     LlcOutRegionEnd   : 'h1_0000_0000,
+    LlcUserAmoBit     : 2,
     // VGA: RGB332
     VgaRedWidth       : 5,
     VgaGreenWidth     : 6,

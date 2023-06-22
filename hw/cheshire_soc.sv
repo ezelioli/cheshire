@@ -476,6 +476,11 @@ module cheshire_soc import cheshire_pkg::*; #(
     // This is necessary for routing in the LLC-internal interconnect.
     always_comb begin
       axi_llc_remap_req = axi_llc_cut_req;
+
+      // Convention: bit 2-9 for LLC
+      axi_llc_remap_req.aw.user = axi_llc_cut_req.aw.user >> Cfg.LlcUserAmoBit;
+      axi_llc_remap_req.ar.user = axi_llc_cut_req.ar.user >> Cfg.LlcUserAmoBit;
+
       if (axi_llc_cut_req.aw.addr & ~AmSpmRegionMask == AmSpmBaseUncached & ~AmSpmRegionMask)
         axi_llc_remap_req.aw.addr  = AmSpm | (AmSpmRegionMask & axi_llc_cut_req.aw.addr);
       if (axi_llc_cut_req.ar.addr & ~AmSpmRegionMask == AmSpmBaseUncached & ~AmSpmRegionMask)
@@ -594,8 +599,8 @@ module cheshire_soc import cheshire_pkg::*; #(
   // As we are core 0, the core 1 and serial link AMO bits should *not* be set.
   always_comb begin
     core_ur_req         = core_out_req;
-    core_ur_req.aw.user = Cfg.AxiUserAmoDomain;
-    core_ur_req.ar.user = Cfg.AxiUserAmoDomain;
+    core_ur_req.aw.user |= Cfg.AxiUserAmoDomain;
+    core_ur_req.ar.user |= Cfg.AxiUserAmoDomain;
     core_ur_req.w.user  = Cfg.AxiUserAmoDomain;
     core_out_rsp        = core_ur_rsp;
   end

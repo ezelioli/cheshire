@@ -58,9 +58,18 @@ _start:
     andi t0, t0, 2  // regs.HW_FEATURES.llc
     beqz t0, _prom_check_run
     la t0, __base_llc
+    // Only configure half of LLC as SPM
 _wait_llc_bist:
     lw t1, 72(t0)   // llc.BIST_STATUS_DONE_BIT
     beqz t1, _wait_llc_bist
+
+    // Cache partitioning
+    li t1, 0x1F00       // give partition 1 size 16
+    sw t1, 84(t0)       // partition table configuration
+    li t1, 1
+    sw t1, 340(t0)      // commit partition configuration
+    csrwi 0xA00, 4      // write PATID=3'b100 into csr
+    
     li t1, -1
     sw t1, 0(t0)    // llc.CFG_SPM_LOW
     sw t1, 4(t0)    // llc.CFG_SPM_HIGH

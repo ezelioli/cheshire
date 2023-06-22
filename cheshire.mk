@@ -13,6 +13,10 @@ REGGEN      ?= $(PYTHON3) $(shell $(BENDER) path register_interface)/vendor/lowr
 VLOG_ARGS   ?= -suppress 2583 -suppress 13314
 VSIM        ?= vsim
 
+MAXTHREAD 	?= 256
+CACHE_PARTITION ?= 1
+
+
 # Define used paths (prefixed to avoid name conflicts)
 CHS_ROOT      ?= $(shell $(BENDER) path cheshire)
 CHS_SW_DIR     = $(CHS_ROOT)/sw
@@ -99,7 +103,7 @@ $(CHS_SLINK_DIR)/.generated: $(CHS_ROOT)/hw/serial_link.hjson
 
 # LLC partitioning configuration
 $(CHS_LLC_DIR)/.generated: 
-	$(MAKE) -C $(CHS_LLC_DIR) REGWIDTH=64 CACHENUMLINES=256 MAXTHREAD=256 CACHE_PARTITION=1 regs
+	$(MAKE) -C $(CHS_LLC_DIR) REGWIDTH=64 CACHENUMLINES=256 MAXTHREAD=$(MAXTHREAD) CACHE_PARTITION=$(CACHE_PARTITION) regs
 	@touch $@
 
 chs-hw-all: $(CHS_ROOT)/hw/regs/cheshire_reg_pkg.sv $(CHS_ROOT)/hw/regs/cheshire_reg_top.sv
