@@ -1109,6 +1109,7 @@ module cheshire_soc import cheshire_pkg::*; #(
         .addr_t         ( addr_t    ),
         .aw_chan_t      ( axi_mst_aw_chan_t ),
         .w_chan_t       ( axi_mst_w_chan_t  ),
+        .ar_chan_t      ( axi_mst_ar_chan_t ),
         .axi_req_t      ( axi_mst_req_t ),
         .axi_resp_t     ( axi_mst_rsp_t )
       ) i_axi_rt_unit (
