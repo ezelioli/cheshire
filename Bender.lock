@@ -24,8 +24,8 @@ packages:
     - common_verification
     - tech_cells_generic
   axi-rt:
-    revision: a0cc4d1695cd3d2ccdf69790e227a872ad97677c
-    version: 0.0.1-alpha
+    revision: a14e1926f1ccedbc8fc739444ce86c1e09195fe5
+    version: 0.0.2-beta
     source:
       Git: git@iis-git.ee.ethz.ch:bslk/axi-rt.git
     dependencies:
