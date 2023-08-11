@@ -163,8 +163,8 @@ packages:
     - common_cells
     - register_interface
   tech_cells_generic:
-    revision: a9cae21902e75b1434328ecf36f85327ba5717de
-    version: 0.2.11
+    revision: e522d0471b4111b581d2575da88c8c3683f05445
+    version: null
     source:
       Git: https://github.com/pulp-platform/tech_cells_generic.git
     dependencies:
