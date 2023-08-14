@@ -19,7 +19,7 @@ ifeq ($(BOARD),vcu128)
 	XILINX_PORT  ?= 3232
 	FPGA_PATH    ?= xilinx_tcf/Xilinx/091847100638A
 	XILINX_HOST  ?= bordcomputer
-	ips-names    := xlnx_mig_ddr4 xlnx_clk_wiz xlnx_vio
+	ips-names    := xlnx_mig_ddr4 xlnx_clk_wiz xlnx_vio xlnx_xdma
 	ifeq ($(INT_JTAG),1)
 		xilinx_targs += -t bscane
 	endif
