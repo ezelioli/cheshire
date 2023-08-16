@@ -90,6 +90,12 @@ module cheshire_top_xilinx
   `DDR3_INTF
 `endif
 
+  // Phy interface for PCIe x4
+  output wire [3 : 0]  pci_exp_txp,
+  output wire [3 : 0]  pci_exp_txn,
+  input  wire [3 : 0]  pci_exp_rxp,
+  input  wire [3 : 0]  pci_exp_rxn,
+
   output logic        uart_tx_o,
   input logic         uart_rx_i
 

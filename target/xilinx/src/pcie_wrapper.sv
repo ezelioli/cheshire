@@ -25,7 +25,10 @@ module pcie_wrapper #(
     input                 soc_resetn_i,
     input                 soc_clk_i,
     // Phy interfaces
-
+    output wire [3 : 0]  pci_exp_txp,
+    output wire [3 : 0]  pci_exp_txn,
+    input  wire [3 : 0]  pci_exp_rxp,
+    input  wire [3 : 0]  pci_exp_rxn,
     // Axi interface
     input  axi_soc_req_t   soc_pcie_req_i,
     output axi_soc_resp_t  soc_pcie_rsp_o,
@@ -240,14 +243,18 @@ module pcie_wrapper #(
 
   // Process ids
   if (IdPadding > 0) begin : gen_downsize_ids
-    // !!! SOC -> PCIE NOT SUPPORTED !!!
+    // SoC -> PCIe downsizing
+    // NOT SUPPORTED
+
+    // PCIe -> SoC upsizing
     assign pcie_spill_req.ar.id = {{-IdPadding{1'b0}}, pcie_spill_req_arid};
     assign pcie_spill_req.aw.id = {{-IdPadding{1'b0}}, pcie_spill_req_awid};
     assign pcie_spill_rsp.r.id = pcie_spill_rsp_rid;
     assign pcie_spill_rsp.b.id = pcie_spill_rsp_bid;
 
   end else begin : gen_upsize_ids
-
+    // NOT SUPPORTED
+    do_not_enter_here i_error();
   end
 
   ///////////////////////
@@ -264,7 +271,7 @@ module pcie_wrapper #(
     .sys_rst_n(soc_resetn_i),
     .axi_aclk(pcie_axi_clk),
     .axi_aresetn(pcie_rstn),
-    //
+    // PCIe in AXI
     .m_axib_awid    ( pcie_spill_req_awid     ),
     .m_axib_awaddr  ( pcie_spill_req.aw.addr  ),
     .m_axib_awlen   ( pcie_spill_req.aw.len   ),
@@ -275,31 +282,68 @@ module pcie_wrapper #(
     .m_axib_awready ( pcie_spill_rsp.aw_ready ),
     .m_axib_awlock  ( pcie_spill_req.aw.lock  ),
     .m_axib_awcache ( pcie_spill_req.aw.cache ),
-    .m_axib_wdata   (  ),
-    .m_axib_wstrb   (  ),
-    .m_axib_wlast   (  ),
-    .m_axib_wvalid  (  ),
-    .m_axib_wready  (  ),
-    .m_axib_bid     (  ),
-    .m_axib_bresp   (  ),
-    .m_axib_bvalid  (  ),
-    .m_axib_bready  (  ),
-    .m_axib_arid    (  ),
-    .m_axib_araddr  (  ),
-    .m_axib_arlen   (  ),
-    .m_axib_arsize  (  ),
-    .m_axib_arburst (  ),
-    .m_axib_arprot  (  ),
-    .m_axib_arvalid (  ),
-    .m_axib_arready (  ),
-    .m_axib_arlock  (  ),
-    .m_axib_arcache (  ),
-    .m_axib_rid     (  ),
-    .m_axib_rdata   (  ),
-    .m_axib_rresp   (  ),
-    .m_axib_rlast   (  ),
-    .m_axib_rvalid  (  ),
-    .m_axib_rready  (  )
+    .m_axib_wdata   ( pcie_spill_req.w.data   ),
+    .m_axib_wstrb   ( pcie_spill_req.w.strb   ),
+    .m_axib_wlast   ( pcie_spill_req.w.last   ),
+    .m_axib_wvalid  ( pcie_spill_req.w_valid  ),
+    .m_axib_wready  ( pcie_spill_rsp.w_ready  ),
+    .m_axib_bid     ( pcie_spill_rsp_bid      ),
+    .m_axib_bresp   ( pcie_spill_rsp.b.resp   ),
+    .m_axib_bvalid  ( pcie_spill_rsp.b.valid  ),
+    .m_axib_bready  ( pcie_spill_req.b.ready  ),
+    .m_axib_arid    ( pcie_spill_req_arid     ),
+    .m_axib_araddr  ( pcie_spill_req.ar.addr  ),
+    .m_axib_arlen   ( pcie_spill_req.ar.len   ),
+    .m_axib_arsize  ( pcie_spill_req.ar.size  ),
+    .m_axib_arburst ( pcie_spill_req.ar.burst ),
+    .m_axib_arprot  ( pcie_spill_req.ar.prot  ),
+    .m_axib_arvalid ( pcie_spill_req.ar_valid ),
+    .m_axib_arready ( pcie_spill_rsp.ar_ready ),
+    .m_axib_arlock  ( pcie_spill_req.ar.lock  ),
+    .m_axib_arcache ( pcie_spill_req.ar.cache ),
+    .m_axib_rid     ( pcie_spill_rsp_rid      ),
+    .m_axib_rdata   ( pcie_spill_rsp.r.data   ),
+    .m_axib_rresp   ( pcie_spill_rsp.r.resp   ),
+    .m_axib_rlast   ( pcie_spill_rsp.r.last   ),
+    .m_axib_rvalid  ( pcie_spill_rsp.r_valid  ),
+    .m_axib_rready  ( pcie_spill_req.r_ready  ),
+    // PCIe out AXI
+    .s_axib_awid      (),
+    .s_axib_awaddr    (),
+    .s_axib_awregion  (),
+    .s_axib_awlen     (),
+    .s_axib_awsize    (),
+    .s_axib_awburst   (),
+    .s_axib_awvalid   (),
+    .s_axib_wdata     (),
+    .s_axib_wstrb     (),
+    .s_axib_wlast     (),
+    .s_axib_wvalid    (),
+    .s_axib_bready    (),
+    .s_axib_arid      (),
+    .s_axib_araddr    (),
+    .s_axib_arregion  (),
+    .s_axib_arlen     (),
+    .s_axib_arsize    (),
+    .s_axib_arburst   (),
+    .s_axib_arvalid   (),
+    .s_axib_rready    (),
+    .s_axib_awready   (),
+    .s_axib_wready    (),
+    .s_axib_bid       (),
+    .s_axib_bresp     (),
+    .s_axib_bvalid    (),
+    .s_axib_arready   (),
+    .s_axib_rid       (),
+    .s_axib_rdata     (),
+    .s_axib_rresp     (),
+    .s_axib_rlast     (),
+    .s_axib_rvalid    (),
+    // PCIe PHY
+    .pci_exp_txp      (),
+    .pci_exp_txn      (),
+    .pci_exp_rxp      (),
+    .pci_exp_rxn      ()
   );
 
 
