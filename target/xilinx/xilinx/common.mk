@@ -12,6 +12,8 @@ endif
 # Note: We do not use Memora as it is bound to Git versionning
 # and not standalone on files hash / environment variables
 ARTIFACTS_PATH=/usr/scratch2/wuerzburg/cykoenig/memora/cheshire
+GREEN='\033[0;32m'
+NC='\033[0m'
 
 all:
 
@@ -36,13 +38,15 @@ generate_sha256:
 # Load artifacts based on .generated_sha256
 load-artifacts: .generated_sha256
 	@if [ -d "$(ARTIFACTS_PATH)/`cat $<`" ]; then\
-		echo "Fetching $(PROJECT) from $(ARTIFACTS_PATH)/`cat $<`"; \
-		cp -r -d $(ARTIFACTS_PATH)/`cat $<`/* .; \
+		echo -e $(GREEN)"Fetching $(PROJECT) from $(ARTIFACTS_PATH)/`cat $<`"$(NC); \
+		cp -r $(ARTIFACTS_PATH)/`cat $<`/* .; \
 	fi
 
 # Save artifacts (this folder) based on .generated_sha256
 save-artifacts: generate_sha256 load-artifacts $(PROJECT).xpr
-	cp -r . $(ARTIFACTS_PATH)/`cat .generated_sha256`/
+	@if [ ! -d "$(ARTIFACTS_PATH)/`cat .generated_sha256`" ]; then \
+		cp -r . $(ARTIFACTS_PATH)/`cat .generated_sha256`; \
+	fi
 
 gui:
 	$(VIVADOENV) $(VIVADO) -mode gui -source tcl/run.tcl &

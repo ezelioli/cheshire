@@ -2,7 +2,13 @@
 # Solderpad Hardware License, Version 0.51, see LICENSE for details.
 # SPDX-License-Identifier: SHL-0.51
 #
-# Author: Florian Zaruba <zarubaf@iis.ee.ethz.ch>
+# Florian Zaruba <zarubaf@iis.ee.ethz.ch>
+# Nils Wistoff <nwistoff@iis.ee.ethz.ch>
+# Cyril Koenig <cykoenig@iis.ee.ethz.ch>
+
+# Ips selection
+set ips $::env(IP_PATHS)
+read_ip $ips
 
 # Contraints files selection
 switch $::env(BOARD) {
@@ -14,10 +20,6 @@ switch $::env(BOARD) {
       exit 1
   }
 }
-
-# Ips selection
-set ips $::env(IP_PATHS)
-read_ip $ips
 
 source scripts/add_sources.tcl
 

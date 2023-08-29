@@ -7,7 +7,7 @@
 #####################
 
 # 50 MHz SoC clock
-set soc_clk clk_50
+set soc_clk clk_50_xlnx_clk_wiz
 set SOC_TCK 20.0
 
 # I2C High-speed mode is 3.2 Mb/s
@@ -34,20 +34,30 @@ set_clock_groups -name sys_clk_async -asynchronous -group {sys_clk}
 # Mig clock #
 #############
 
-# Dram axi clock : 200MHz
+# Dram axi clock : 200 MHz
 set MIG_TCK 5
-set MIG_RST [get_nets i_dram_wrapper/dram_rst_o]
-create_clock -period $MIG_TCK -name dram_axi_clk [get_pins i_dram_wrapper/i_dram/ui_clk]
-set_clock_groups -name dram_async -asynchronous -group {dram_axi_clk}
-set_false_path -hold -through $MIG_RST
-set_max_delay -through $MIG_RST $MIG_TCK
+create_generated_clock -source [get_pins i_dram_wrapper/i_dram/u_xlnx_mig_7_ddr3_mig/u_ddr3_infrastructure/gen_mmcm.mmcm_i/CLKFBOUT] \
+ -divide_by 1 -add -master_clock clk_pll_i -name dram_axi_clk [get_pins i_dram_wrapper/i_dram/ui_clk]
+# Aynch reset in
+set MIG_RST_I [get_pin i_dram_wrapper/i_dram/aresetn]
+set_false_path -hold -setup -through $MIG_RST_I
+# Synch reset out
+set MIG_RST_O [get_pins i_dram_wrapper/i_dram/ui_clk]
+set_false_path -hold -through $MIG_RST_O
+set_max_delay -through $MIG_RST_O $MIG_TCK
 
 ########
 # CDCs #
 ########
 
-set_max_delay -through [get_nets -of_objects [get_cells i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/*] -filter {NAME=~*async*}] $MIG_TCK
-set_max_delay -datapath -from [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/*reg*/C] -to [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_dst_*/*i_sync/reg*/D] $MIG_TCK
+set_max_delay -datapath \
+ -from [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/*reg*/C] \
+  -to [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/*i_sync/reg*/D] $MIG_TCK
+
+set_max_delay -datapath \
+ -from [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/*reg*/C] \
+  -to [get_pins i_dram_wrapper/gen_cdc.i_axi_cdc_mig/i_axi_cdc_*/i_cdc_fifo_gray_*/i_spill_register/spill_register_flushable_i/*reg*/D] $MIG_TCK
+
 
 #######
 # VGA #

@@ -51,7 +51,7 @@ int boot_spi_sdcard(uint64_t core_freq, uint64_t rtc_freq) {
 int boot_spi_s25fs512s(uint64_t core_freq, uint64_t rtc_freq) {
     // Initialize device handle
     spi_s25fs512s_t device = {
-        .spi_freq = MIN(40 * 1000 * 1000, core_freq / 4), // Up to quarter core freq or 40MHz
+        .spi_freq = MIN(40 * 1000 * 1000, core_freq / 5), // Up to quarter core freq or 40MHz
         .csid = 1};
     CHECK_CALL(spi_s25fs512s_init(&device, core_freq))
     // Wait for device to be initialized (t_PU = 300us, round up extra tick to be sure)
