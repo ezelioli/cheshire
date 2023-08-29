@@ -12,16 +12,16 @@ VLOG_ARGS ?= -suppress 2583 -suppress 13314
 VSIM      ?= vsim
 
 # Define used paths (prefixed to avoid name conflicts)
-CHS_ROOT      ?= $(shell $(BENDER) path cheshire)
-CHS_REG_DIR   := $(shell $(BENDER) path register_interface)
-CHS_SLINK_DIR := $(shell $(BENDER) path serial_link)
-CHS_LLC_DIR   := $(shell $(BENDER) path axi_llc)
+CHS_ROOT      ?= $(shell echo "chs_root"; $(BENDER) path cheshire)
+CHS_REG_DIR   := $(shell echo "chs_reg"; $(BENDER) path register_interface)
+CHS_SLINK_DIR := $(shell echo "chs_slink"; $(BENDER) path serial_link)
+CHS_LLC_DIR   := $(shell echo "chs_llc"; $(BENDER) path axi_llc)
 
 # Define paths used in dependencies
-OTPROOT      := $(shell $(BENDER) path opentitan_peripherals)
-CLINTROOT    := $(shell $(BENDER) path clint)
-AXIRTROOT    := $(shell $(BENDER) path axi_rt)
-AXI_VGA_ROOT := $(shell $(BENDER) path axi_vga)
+OTPROOT      := $(shell echo "chs_otp"; $(BENDER) path opentitan_peripherals)
+CLINTROOT    := $(shell echo "chs_clint"; $(BENDER) path clint)
+AXIRTROOT    := $(shell echo "chs_axi"; $(BENDER) path axi_rt)
+AXI_VGA_ROOT := $(shell echo "chs_vga"; $(BENDER) path axi_vga)
 
 REGTOOL ?= $(CHS_REG_DIR)/vendor/lowrisc_opentitan/util/regtool.py
 
