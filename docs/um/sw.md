@@ -1,8 +1,7 @@
 # Software
 
+## Baremetal programming
+
 ## Boot Flow
 
 ## Linux
-
-
-## Baremetal programming

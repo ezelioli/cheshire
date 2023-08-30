@@ -22,8 +22,8 @@ To *build* Cheshire, you will need:
 - GNU Make `>= 3.82`
 - Bender `>= 0.27.1`
 - Python `>= 3.9`
-- Python packages in `requirements.txt`
 - RISCV GCC `>= 11.2.0`
+- Python packages in `requirements.txt`
 
 Depending on your desired target, additional dependencies may be needed.
 
