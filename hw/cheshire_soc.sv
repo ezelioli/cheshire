@@ -477,10 +477,6 @@ module cheshire_soc import cheshire_pkg::*; #(
     always_comb begin
       axi_llc_remap_req = axi_llc_cut_req;
 
-      // Convention: bit 2-9 for LLC
-      axi_llc_remap_req.aw.user = axi_llc_cut_req.aw.user >> Cfg.LlcUserAmoBit;
-      axi_llc_remap_req.ar.user = axi_llc_cut_req.ar.user >> Cfg.LlcUserAmoBit;
-
       if (axi_llc_cut_req.aw.addr & ~AmSpmRegionMask == AmSpmBaseUncached & ~AmSpmRegionMask)
         axi_llc_remap_req.aw.addr  = AmSpm | (AmSpmRegionMask & axi_llc_cut_req.aw.addr);
       if (axi_llc_cut_req.ar.addr & ~AmSpmRegionMask == AmSpmBaseUncached & ~AmSpmRegionMask)
@@ -493,11 +489,13 @@ module cheshire_soc import cheshire_pkg::*; #(
       .NumLines         ( Cfg.LlcNumLines  ),
       .NumBlocks        ( Cfg.LlcNumBlocks ),
       .CachePartition   ( Cfg.LlcCachePartition   ),
-      .MaxThread        ( Cfg.LlcMaxthread ),
+      .MaxPartition     ( Cfg.LlcMaxPartition ),
       .AxiIdWidth       ( AxiSlvIdWidth    ),
       .AxiAddrWidth     ( Cfg.AddrWidth    ),
       .AxiDataWidth     ( Cfg.AxiDataWidth ),
       .AxiUserWidth     ( Cfg.AxiUserWidth ),
+      .AxiUserIdMsb     ( Cfg.LlcUserAmoMsb ),
+      .AxiUserIdLsb     ( Cfg.LlcUserAmoLsb ),
       .slv_req_t        ( axi_slv_req_t ),
       .slv_resp_t       ( axi_slv_rsp_t ),
       .mst_req_t        ( axi_ext_llc_req_t ),

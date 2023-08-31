@@ -115,7 +115,7 @@ module cheshire_top_xilinx
     LlcNumLines       : 256,
     LlcNumBlocks      : 8,
     LlcCachePartition : 1,
-    LlcMaxthread      : 256,
+    LlcCachePartition : 16,
     LlcMaxReadTxns    : 8,
     LlcMaxWriteTxns   : 8,
     LlcAmoNumCuts     : 1,
@@ -123,7 +123,8 @@ module cheshire_top_xilinx
     LlcOutConnect     : 1,
     LlcOutRegionStart : 'h8000_0000,
     LlcOutRegionEnd   : 'h1_0000_0000,
-    LlcUserAmoBit     : 2,
+    LlcUserAmoMsb     : 6,
+    LlcUserAmoLsb     : 2,
     // VGA: RGB332
     VgaRedWidth       : 5,
     VgaGreenWidth     : 6,

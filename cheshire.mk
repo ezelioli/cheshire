@@ -13,7 +13,7 @@ REGGEN      ?= $(PYTHON3) $(shell $(BENDER) path register_interface)/vendor/lowr
 VLOG_ARGS   ?= -suppress 2583 -suppress 13314
 VSIM        ?= vsim
 
-MAXTHREAD 	?= 256
+MAXPARTITION 	?= 16
 CACHE_PARTITION ?= 1
 
 
@@ -103,7 +103,7 @@ $(CHS_SLINK_DIR)/.generated: $(CHS_ROOT)/hw/serial_link.hjson
 
 # LLC partitioning configuration
 $(CHS_LLC_DIR)/.generated: 
-	$(MAKE) -C $(CHS_LLC_DIR) REGWIDTH=64 CACHENUMLINES=256 MAXTHREAD=$(MAXTHREAD) CACHE_PARTITION=$(CACHE_PARTITION) regs
+	$(MAKE) -C $(CHS_LLC_DIR) REGWIDTH=64 CACHENUMLINES=256 MAXPARTITION=$(MAXPARTITION) CACHE_PARTITION=$(CACHE_PARTITION) regs
 	@touch $@
 
 chs-hw-all: $(CHS_ROOT)/hw/regs/cheshire_reg_pkg.sv $(CHS_ROOT)/hw/regs/cheshire_reg_top.sv

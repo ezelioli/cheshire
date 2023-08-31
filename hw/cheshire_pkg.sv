@@ -130,7 +130,7 @@ package cheshire_pkg;
     shrt_bt LlcNumLines;
     shrt_bt LlcNumBlocks;
     bit     LlcCachePartition;
-    shrt_bt LlcMaxthread;
+    shrt_bt LlcMaxPartition;
     dw_bt   LlcMaxReadTxns;
     dw_bt   LlcMaxWriteTxns;
     aw_bt   LlcAmoNumCuts;
@@ -138,7 +138,8 @@ package cheshire_pkg;
     bit     LlcOutConnect;
     doub_bt LlcOutRegionStart;
     doub_bt LlcOutRegionEnd;
-    dw_bt   LlcUserAmoBit;
+    dw_bt   LlcUserAmoMsb;
+    dw_bt   LlcUserAmoLsb;
     // Parameters for VGA
     byte_bt VgaRedWidth;
     byte_bt VgaGreenWidth;
@@ -467,7 +468,7 @@ package cheshire_pkg;
     LlcNumLines       : 256,
     LlcNumBlocks      : 8,
     LlcCachePartition : 1,
-    LlcMaxthread      : 256,
+    LlcMaxPartition   : 16,
     LlcMaxReadTxns    : 8,
     LlcMaxWriteTxns   : 8,
     LlcAmoNumCuts     : 1,
@@ -475,7 +476,8 @@ package cheshire_pkg;
     LlcOutConnect     : 1,
     LlcOutRegionStart : 'h8000_0000,
     LlcOutRegionEnd   : 'h1_0000_0000,
-    LlcUserAmoBit     : 2,
+    LlcUserAmoMsb     : 6,
+    LlcUserAmoLsb     : 2,
     // VGA: RGB332
     VgaRedWidth       : 3,
     VgaGreenWidth     : 3,

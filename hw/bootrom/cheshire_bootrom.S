@@ -68,7 +68,6 @@ _wait_llc_bist:
     sw t1, 84(t0)       // partition table configuration
     li t1, 1
     sw t1, 340(t0)      // commit partition configuration
-    csrwi 0xA00, 4      // write PATID=3'b100 into csr
     
     li t1, -1
     sw t1, 0(t0)    // llc.CFG_SPM_LOW
